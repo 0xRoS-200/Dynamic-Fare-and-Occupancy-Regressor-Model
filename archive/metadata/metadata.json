@@ -1,0 +1,90 @@
+{
+  "dataset_name": "Public Transportation Usage Dataset",
+  "version": "1.0.0",
+  "created_at": "2026-05-13T19:18:36.112228",
+  "purpose": [
+    "demand forecasting",
+    "anomaly detection",
+    "route optimization",
+    "passenger flow modeling",
+    "urban mobility analysis",
+    "GNN station graph modeling"
+  ],
+  "n_cities": 6,
+  "n_rows_total": 569400,
+  "n_columns": 88,
+  "temporal_coverage": {
+    "start": "2020-01-01 00:00:00",
+    "end": "2020-12-30 23:00:00",
+    "frequency": "1h",
+    "span_days": 364
+  },
+  "cities": [
+    "London",
+    "New_York",
+    "Berlin",
+    "Tokyo",
+    "Paris",
+    "Singapore"
+  ],
+  "transit_modes": [
+    "metro",
+    "bus",
+    "rail",
+    "tram",
+    "lrt",
+    "ferry",
+    "light_rail"
+  ],
+  "fare_types": [
+    "standard",
+    "concession",
+    "child",
+    "group",
+    "tourist_pass",
+    "monthly_pass"
+  ],
+  "ml_tasks": {
+    "time_series_forecasting": {
+      "target": "boarding_count",
+      "evaluation": [
+        "MAE",
+        "RMSE",
+        "MAPE"
+      ]
+    },
+    "delay_prediction": {
+      "target": "delay_minutes",
+      "evaluation": [
+        "MAE",
+        "R2"
+      ]
+    },
+    "anomaly_detection": {
+      "target": "anomaly_flag",
+      "evaluation": [
+        "F1",
+        "AUC-ROC"
+      ]
+    },
+    "occupancy_prediction": {
+      "target": "occupancy_rate",
+      "evaluation": [
+        "MAE",
+        "R2"
+      ]
+    },
+    "gnn_flow_modeling": {
+      "graph": "station_nodes + route_edges + transfer_edges"
+    }
+  },
+  "data_sources": [
+    "Fully synthetic inspired by GTFS feeds, Transport for London, MTA NYC, VBB Berlin, RATP Paris"
+  ],
+  "ethical_notes": [
+    "No real passenger data fully synthetic",
+    "No PII",
+    "GDPR-compatible by design"
+  ],
+  "split_strategy": "chronological 80/10/10"
+}

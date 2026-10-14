@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# Spark / HDFS local fallback
+hdfs_local/
+spark-warehouse/
+derby.log
+metastore_db/
+
+# MLflow
+mlflow.db
+mlruns/
+
+# SQLite
+*.db
+
+# Streamlit
+.streamlit/
+
+# Logs
+*.log
+logs/
+
+# Superpowers SDD workspace
+.superpowers/
+
+# OS
+.DS_Store
+Thumbs.db
