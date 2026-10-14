@@ -87,3 +87,21 @@ class Predictor:
             "timestamp": ts,
         }
 
+
+def insert_prediction(result: dict, db_path: str = None):
+    """Convenience helper to insert a prediction result dictionary into SQLite."""
+    from api.server import insert_prediction as server_insert_prediction, get_db_path
+
+    path = db_path or get_db_path()
+    server_insert_prediction(
+        db_path=path,
+        ts=str(result.get("timestamp", result.get("ts", datetime.now(timezone.utc).isoformat()))),
+        city=str(result.get("city", "Unknown")),
+        route=str(result.get("route_id", result.get("route", "Unknown"))),
+        fare_pred=float(result.get("fare", result.get("fare_pred", 0.0))),
+        occupancy_pred=float(result.get("occupancy", result.get("occupancy_pred", 0.0))),
+        delay_pred=float(result.get("delay", result.get("delay_pred", 0.0))),
+        feed_type=str(result.get("feed_type", "real")),
+    )
+
+
