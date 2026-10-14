@@ -17,6 +17,9 @@ if sys.platform == "win32" and "HADOOP_HOME" not in os.environ:
             os.environ["PATH"] = bin_path + os.pathsep + os.environ.get("PATH", "")
             break
 
+os.environ["PYSPARK_PYTHON"] = sys.executable
+os.environ["PYSPARK_DRIVER_PYTHON"] = sys.executable
+
 
 def get_or_create_spark(app_name: str = "transit_ingest"):
     from pyspark.sql import SparkSession
