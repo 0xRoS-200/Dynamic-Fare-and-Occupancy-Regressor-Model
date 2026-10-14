@@ -28,6 +28,8 @@ def get_or_create_spark(app_name: str = "transit_ingest"):
         SparkSession.builder.appName(app_name)
         .master("local[*]")
         .config("spark.sql.shuffle.partitions", "4")
+        .config("spark.pyspark.python", sys.executable)
+        .config("spark.pyspark.driver.python", sys.executable)
         .getOrCreate()
     )
 
