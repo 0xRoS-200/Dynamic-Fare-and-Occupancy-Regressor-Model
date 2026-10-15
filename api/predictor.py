@@ -1,3 +1,4 @@
+import math
 import os
 import sys
 from datetime import datetime, timezone
@@ -64,7 +65,10 @@ class Predictor:
         for col_name in self.input_cols:
             val = event.get(col_name)
             try:
-                row_values.append(float(val) if val is not None else 0.0)
+                fval = float(val) if val is not None else 0.0
+                if math.isnan(fval) or math.isinf(fval):
+                    fval = 0.0
+                row_values.append(fval)
             except (ValueError, TypeError):
                 row_values.append(0.0)
 
@@ -73,6 +77,13 @@ class Predictor:
         fare_pred = float(self.fare_model.transform(df).select("prediction").head()["prediction"])
         occ_pred = float(self.occupancy_model.transform(df).select("prediction").head()["prediction"])
         delay_pred = float(self.delay_model.transform(df).select("prediction").head()["prediction"])
+
+        if math.isnan(fare_pred) or math.isinf(fare_pred):
+            fare_pred = 0.0
+        if math.isnan(occ_pred) or math.isinf(occ_pred):
+            occ_pred = 0.0
+        if math.isnan(delay_pred) or math.isinf(delay_pred):
+            delay_pred = 0.0
 
         ts = str(
             event.get("timestamp")

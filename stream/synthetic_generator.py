@@ -124,19 +124,25 @@ class SyntheticGenerator:
         }
 
         for col, col_stat in self.stats.items():
-            if col in skip_cols:
+            if col in skip_cols or not isinstance(col_stat, dict):
                 continue
             mu = col_stat.get("mean", 0.0)
+            if mu is None or not isinstance(mu, (int, float)) or math.isnan(mu) or math.isinf(mu):
+                mu = 0.0
             sigma = col_stat.get("std", 1.0)
+            if sigma is None or not isinstance(sigma, (int, float)) or math.isnan(sigma) or math.isinf(sigma) or sigma <= 0.0:
+                sigma = 1.0
             val = float(self.rng.normal(loc=mu, scale=sigma))
+            if math.isnan(val) or math.isinf(val):
+                val = float(mu)
             event[col] = val
 
         # Handle target defaults if not already present in stats
-        if "fare_amount" not in event:
+        if "fare_amount" not in event or math.isnan(event["fare_amount"]):
             event["fare_amount"] = float(self.rng.normal(7.92, 2.81))
-        if "occupancy_rate" not in event:
+        if "occupancy_rate" not in event or math.isnan(event["occupancy_rate"]):
             event["occupancy_rate"] = float(self.rng.normal(0.15, 0.25))
-        if "delay_minutes" not in event:
+        if "delay_minutes" not in event or math.isnan(event["delay_minutes"]):
             event["delay_minutes"] = float(self.rng.normal(0.66, 3.18))
 
         # Modest adjustment under anomaly without breaking 3-sigma bound
@@ -145,6 +151,11 @@ class SyntheticGenerator:
                 event["delay_minutes"] = event["delay_minutes"] + 2.0
             elif anomaly_type == "crowd_surge":
                 event["occupancy_rate"] = event["occupancy_rate"] + 0.1
+
+        # Final safety pass: replace any remaining NaN or Inf with 0.0
+        for k, v in list(event.items()):
+            if isinstance(v, float) and (math.isnan(v) or math.isinf(v)):
+                event[k] = 0.0
 
         return event
 

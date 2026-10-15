@@ -60,25 +60,39 @@ kpi5.metric("Avg Predicted Delay", avg_delay)
 
 st.markdown("---")
 
+def render_chart(fig):
+    try:
+        st.plotly_chart(fig, width="stretch")
+    except TypeError:
+        st.plotly_chart(fig, use_container_width=True)
+
+
+def render_dataframe(data):
+    try:
+        st.dataframe(data, width="stretch")
+    except TypeError:
+        st.dataframe(data, use_container_width=True)
+
+
 # 2-Column Chart Grid (8 Interactive Plotly Visualizations)
 col1, col2 = st.columns(2)
 
 with col1:
-    st.plotly_chart(build_real_vs_predicted_chart(df, target="fare_pred"), use_container_width=True)
-    st.plotly_chart(build_city_heatmap(df), use_container_width=True)
-    st.plotly_chart(build_rolling_rmse_gauge(df, target="fare_pred"), use_container_width=True)
-    st.plotly_chart(build_delay_violin(df), use_container_width=True)
+    render_chart(build_real_vs_predicted_chart(df, target="fare_pred"))
+    render_chart(build_city_heatmap(df))
+    render_chart(build_rolling_rmse_gauge(df, target="fare_pred"))
+    render_chart(build_delay_violin(df))
 
 with col2:
-    st.plotly_chart(build_real_vs_synthetic_error_chart(df), use_container_width=True)
-    st.plotly_chart(build_feature_importance_chart(), use_container_width=True)
-    st.plotly_chart(build_anomaly_timeline(df), use_container_width=True)
-    st.plotly_chart(build_fare_boxplot(df), use_container_width=True)
+    render_chart(build_real_vs_synthetic_error_chart(df))
+    render_chart(build_feature_importance_chart())
+    render_chart(build_anomaly_timeline(df))
+    render_chart(build_fare_boxplot(df))
 
 # Data Explorer
 with st.expander("Explore Raw Prediction Logs"):
     if not df.empty:
-        st.dataframe(df, use_container_width=True)
+        render_dataframe(df)
     else:
         st.info("No predictions recorded yet. Run the streaming job or synthetic generator to populate data.")
 

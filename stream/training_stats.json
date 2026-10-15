@@ -300,40 +300,40 @@
     "max": 36.0
   },
   "board_lag_1": {
-    "mean": NaN,
-    "std": NaN,
-    "min": NaN,
-    "max": NaN
+    "mean": 0.0,
+    "std": 1.0,
+    "min": 0.0,
+    "max": 1.0
   },
   "occ_lag_1": {
-    "mean": NaN,
-    "std": NaN,
-    "min": NaN,
-    "max": NaN
+    "mean": 0.0,
+    "std": 1.0,
+    "min": 0.0,
+    "max": 1.0
   },
   "board_lag_24": {
-    "mean": NaN,
-    "std": NaN,
-    "min": NaN,
-    "max": NaN
+    "mean": 0.0,
+    "std": 1.0,
+    "min": 0.0,
+    "max": 1.0
   },
   "occ_lag_24": {
-    "mean": NaN,
-    "std": NaN,
-    "min": NaN,
-    "max": NaN
+    "mean": 0.0,
+    "std": 1.0,
+    "min": 0.0,
+    "max": 1.0
   },
   "board_lag_168": {
-    "mean": NaN,
-    "std": NaN,
-    "min": NaN,
-    "max": NaN
+    "mean": 0.0,
+    "std": 1.0,
+    "min": 0.0,
+    "max": 1.0
   },
   "occ_lag_168": {
-    "mean": NaN,
-    "std": NaN,
-    "min": NaN,
-    "max": NaN
+    "mean": 0.0,
+    "std": 1.0,
+    "min": 0.0,
+    "max": 1.0
   },
   "flow_imbalance": {
     "mean": 0.047143923428170004,
@@ -342,22 +342,22 @@
     "max": 36.0
   },
   "board_roc_1h": {
-    "mean": NaN,
-    "std": NaN,
-    "min": NaN,
-    "max": NaN
+    "mean": 0.0,
+    "std": 1.0,
+    "min": 0.0,
+    "max": 1.0
   },
   "board_roc_24h": {
-    "mean": NaN,
-    "std": NaN,
-    "min": NaN,
-    "max": NaN
+    "mean": 0.0,
+    "std": 1.0,
+    "min": 0.0,
+    "max": 1.0
   },
   "board_acc": {
-    "mean": NaN,
-    "std": NaN,
-    "min": NaN,
-    "max": NaN
+    "mean": 0.0,
+    "std": 1.0,
+    "min": 0.0,
+    "max": 1.0
   },
   "occ_volatility": {
     "mean": 0.012415518308746046,
@@ -474,40 +474,40 @@
     "max": 1.0
   },
   "rolling_mean_1h_boarding": {
-    "mean": NaN,
-    "std": NaN,
-    "min": NaN,
-    "max": NaN
+    "mean": 0.0,
+    "std": 1.0,
+    "min": 0.0,
+    "max": 1.0
   },
   "rolling_std_1h_boarding": {
-    "mean": NaN,
-    "std": NaN,
-    "min": NaN,
-    "max": NaN
+    "mean": 0.0,
+    "std": 1.0,
+    "min": 0.0,
+    "max": 1.0
   },
   "rolling_mean_6h_boarding": {
-    "mean": NaN,
-    "std": NaN,
-    "min": NaN,
-    "max": NaN
+    "mean": 0.0,
+    "std": 1.0,
+    "min": 0.0,
+    "max": 1.0
   },
   "rolling_std_6h_boarding": {
-    "mean": NaN,
-    "std": NaN,
-    "min": NaN,
-    "max": NaN
+    "mean": 0.0,
+    "std": 1.0,
+    "min": 0.0,
+    "max": 1.0
   },
   "rolling_mean_24h_boarding": {
-    "mean": NaN,
-    "std": NaN,
-    "min": NaN,
-    "max": NaN
+    "mean": 0.0,
+    "std": 1.0,
+    "min": 0.0,
+    "max": 1.0
   },
   "rolling_std_24h_boarding": {
-    "mean": NaN,
-    "std": NaN,
-    "min": NaN,
-    "max": NaN
+    "mean": 0.0,
+    "std": 1.0,
+    "min": 0.0,
+    "max": 1.0
   },
   "city_mean_boarding": {
     "mean": 1.2399126273270116,
