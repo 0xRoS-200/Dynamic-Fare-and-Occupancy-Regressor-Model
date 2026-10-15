@@ -90,6 +90,56 @@ The **Dynamic Fare & Occupancy Regressor** is an enterprise-grade distributed tr
 
 ---
 
+## Dataset & Data Sources
+
+This platform models urban transit dynamics using the **Public Transportation Usage Dataset**, a large-scale multimodal transit dataset capturing hourly mobility patterns, demand cycles, delay propagation, and occupancy rates across 6 international metropolitan systems.
+
+- **Primary Dataset Link (Kaggle)**: [Public Transportation Usage Dataset on Kaggle](https://www.kaggle.com/datasets/amith1707/public-transportation-usage-dataset)
+- **Dataset Author**: Amith Nair
+- **License**: [Creative Commons Zero (CC0 1.0) Public Domain](https://creativecommons.org/publicdomain/zero/1.0/)
+- **Total Records**: 569,400 hourly observations (2020-01-01 to 2020-12-30)
+- **Feature Space**: 88 attributes (demand counts, delays, occupancy, network graph metrics, cyclic temporal encodings)
+- **Metropolitan Cities**: London, New York, Berlin, Tokyo, Paris, Singapore
+- **Transit Modes**: Metro, Bus, Rail, Tram, Light Rail (LRT), Ferry
+
+### Dataset Download & Acquisition
+
+To download the dataset using the Kaggle API CLI:
+
+```bash
+# Ensure Kaggle CLI is installed and configured with your API credentials (~/.kaggle/kaggle.json)
+kaggle datasets download -d amith1707/public-transportation-usage-dataset
+unzip public-transportation-usage-dataset.zip -d archive/
+```
+
+Alternatively, download manually from the [Kaggle Dataset Page](https://www.kaggle.com/datasets/amith1707/public-transportation-usage-dataset) and unpack into the `archive/` directory.
+
+### Local Archive Layout
+
+The repository expects data under the local `archive/data/` directory (excluded from git tracking):
+
+```
+archive/
+├── data/
+│   ├── splits/
+│   │   ├── transit_train.csv/train.csv    # 80% Chronological Train split (455,520 records)
+│   │   ├── transit_val.csv/val.csv        # 10% Chronological Validation split (56,940 records)
+│   │   └── transit_test.csv/test.csv      # 10% Chronological Test split (56,940 records)
+│   ├── full/
+│   │   └── transit_full.csv/processed.csv # Full consolidated transit telemetry
+│   ├── features/
+│   │   └── transit_features.csv/transit_fe.csv # Baseline feature matrix
+│   └── subsets/
+│       ├── transit_forecasting.csv
+│       ├── transit_anomaly_detection.csv
+│       └── Cities/ (Berlin, London, New York, Paris, Singapore, Tokyo)
+├── metadata/
+│   └── metadata.json                      # Dataset schema and specification metadata
+└── README.md                              # Upstream dataset documentation
+```
+
+---
+
 ## Prerequisites
 
 - **Java**: OpenJDK 11 or 17 (verified with JVM 64-bit)
@@ -158,8 +208,8 @@ Dynamic Fare and Occupancy Regressor/
 
 ```bash
 # Clone the repository and install dependencies
-git clone https://github.com/example/dynamic-fare-regressor.git
-cd "Dynamic Fare and Occupancy Regressor"
+git clone https://github.com/0xRoS-200/Dynamic-Fare-and-Occupancy-Regressor-Model.git
+cd "Dynamic-Fare-and-Occupancy-Regressor-Model"
 pip install -r requirements.txt
 ```
 
