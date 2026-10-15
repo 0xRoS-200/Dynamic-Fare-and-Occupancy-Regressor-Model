@@ -213,6 +213,24 @@ cd "Dynamic-Fare-and-Occupancy-Regressor-Model"
 pip install -r requirements.txt
 ```
 
+### 🚀 1-Command All-In-One Run (Fastest)
+
+To launch the entire end-to-end platform with a single command:
+
+```bash
+python run.py
+```
+*(or run `make run` or execute `.\run.bat` on Windows)*
+
+This unified command automatically:
+1. Validates pre-trained models exist in `hdfs_local/transit/models/` (trains them if missing).
+2. Starts the **FastAPI prediction server** on `http://localhost:8000`.
+3. Polls `/health` until the inference engine is ready.
+4. Launches the **Streamlit analytics dashboard** on `http://localhost:8501`.
+5. Starts the **synthetic telemetry generator** to feed live predictions.
+6. Opens the dashboard in your default browser.
+7. Gracefully cleans up all background processes on `Ctrl+C`.
+
 ### 2. Infrastructure Validation
 
 ```bash

@@ -1,3 +1,9 @@
+run:
+	python run.py
+
+run-all:
+	python run.py --pipeline
+
 setup:
 	bash infra/setup_hadoop.sh --local-fallback
 	bash infra/setup_kafka.sh
