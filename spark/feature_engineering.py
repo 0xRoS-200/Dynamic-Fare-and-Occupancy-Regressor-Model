@@ -279,6 +279,25 @@ def run_pipeline(
     }
 
 
+def run(
+    src: str,
+    dest: str,
+    split: str = "train",
+    model_dest: str = None,
+    transformer: FeatureTransformer = None,
+) -> dict:
+    """Convenience alias for run_pipeline matching SDD integration test contract."""
+    if model_dest is None:
+        model_dest = os.path.join(dest, "models", "transformer")
+    return run_pipeline(
+        src=src,
+        dest=dest,
+        model_dest=model_dest,
+        split=split,
+        transformer=transformer,
+    )
+
+
 def main():
     parser = argparse.ArgumentParser(description="Feature Engineering (MapReduce Reduce Phase)")
     parser.add_argument("--src", type=str, default=None, help="Source raw parquet directory")
