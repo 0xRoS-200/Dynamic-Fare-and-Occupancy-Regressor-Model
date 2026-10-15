@@ -32,6 +32,9 @@ logs/
 # Superpowers SDD workspace
 .superpowers/
 
+# Data / Datasets
+archive/data/
+
 # OS
 .DS_Store
 Thumbs.db
