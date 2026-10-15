@@ -23,6 +23,7 @@ os.environ["PYSPARK_DRIVER_PYTHON"] = sys.executable
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from pyspark.ml import PipelineModel
+from pyspark.ml.linalg import Vectors
 from pyspark.sql.types import DoubleType, StructField, StructType
 from spark.ingest import get_or_create_spark
 
@@ -52,6 +53,11 @@ class Predictor:
             StructField(col_name, DoubleType(), True) for col_name in self.input_cols
         ])
 
+        # Cache direct estimators for sub-10ms vectorized inference
+        self.fare_estimator = self.fare_model.stages[1]
+        self.occupancy_estimator = self.occupancy_model.stages[1]
+        self.delay_estimator = self.delay_model.stages[1]
+
     def predict(self, event: dict) -> dict:
         """Runs predictions on single transit event dict.
 
@@ -72,11 +78,18 @@ class Predictor:
             except (ValueError, TypeError):
                 row_values.append(0.0)
 
-        df = self.spark.createDataFrame([row_values], schema=self.schema)
-
-        fare_pred = float(self.fare_model.transform(df).select("prediction").head()["prediction"])
-        occ_pred = float(self.occupancy_model.transform(df).select("prediction").head()["prediction"])
-        delay_pred = float(self.delay_model.transform(df).select("prediction").head()["prediction"])
+        # High-performance direct vector inference (sub-10ms)
+        try:
+            vec = Vectors.dense(row_values)
+            fare_pred = float(self.fare_estimator.predict(vec))
+            occ_pred = float(self.occupancy_estimator.predict(vec))
+            delay_pred = float(self.delay_estimator.predict(vec))
+        except Exception:
+            # Resilient fallback to DataFrame transform
+            df = self.spark.createDataFrame([row_values], schema=self.schema)
+            fare_pred = float(self.fare_model.transform(df).select("prediction").head()["prediction"])
+            occ_pred = float(self.occupancy_model.transform(df).select("prediction").head()["prediction"])
+            delay_pred = float(self.delay_model.transform(df).select("prediction").head()["prediction"])
 
         if math.isnan(fare_pred) or math.isinf(fare_pred):
             fare_pred = 0.0

@@ -85,8 +85,12 @@ def get_predictor() -> Predictor:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup: ensure SQLite DB table exists
+    # Startup: ensure SQLite DB table exists and pre-warm predictor
     init_db()
+    try:
+        get_predictor()
+    except Exception as e:
+        print(f"[WARN] Failed to pre-warm predictor: {e}")
     yield
 
 

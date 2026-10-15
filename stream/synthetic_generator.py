@@ -179,7 +179,7 @@ def run_generator(
     while True:
         event = gen.generate_event()
         try:
-            resp = requests.post(predict_endpoint, json=event, timeout=5)
+            resp = requests.post(predict_endpoint, json=event, timeout=10)
             if resp.status_code == 200:
                 sent_count += 1
                 if sent_count % 50 == 0:

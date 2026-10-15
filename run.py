@@ -39,17 +39,20 @@ def cleanup(signum=None, frame=None):
     sys.exit(0)
 
 
-def wait_for_health(url: str, timeout: int = 45) -> bool:
+def wait_for_health(url: str, timeout: int = 60) -> bool:
     """Poll API health endpoint until ready or timeout expires."""
     start = time.time()
     while time.time() - start < timeout:
         try:
             with urllib.request.urlopen(url, timeout=2) as resp:
                 if resp.status == 200:
+                    print()
                     return True
         except Exception:
             pass
+        print(".", end="", flush=True)
         time.sleep(1)
+    print()
     return False
 
 
@@ -156,8 +159,8 @@ def main():
 
     # 3. Wait for API to become ready
     health_url = f"http://localhost:{args.api_port}/health"
-    print(f"[INFO] Waiting for API health check at {health_url} ...")
-    if wait_for_health(health_url, timeout=30):
+    print(f"[INFO] Waiting for API health check at {health_url} ...", end="", flush=True)
+    if wait_for_health(health_url, timeout=60):
         print("[INFO] API Server is healthy and accepting predictions!")
     else:
         print(
